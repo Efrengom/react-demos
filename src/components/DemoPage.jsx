@@ -46,7 +46,7 @@ const EDITOR_COLORS = {
 const EDITOR_SYNTAX = {
   light: {
     plain: '#1a2238',
-    comment: { color: '#6b7389', fontStyle: 'italic' },
+    comment: '#6b7389',
     keyword: '#9b2c6f',
     definition: '#4a3aa8',
     punctuation: '#596175',
@@ -57,7 +57,7 @@ const EDITOR_SYNTAX = {
   },
   dark: {
     plain: '#e4e8f1',
-    comment: { color: '#8b93a8', fontStyle: 'italic' },
+    comment: '#8b93a8',
     keyword: '#f28cc4',
     definition: '#b3a6ff',
     punctuation: '#9ba3b6',
@@ -70,16 +70,16 @@ const EDITOR_SYNTAX = {
 
 // Matches the editor to the rest of the site: same ink and paper, and the
 // lesson's category color as the accent (the deep shade on light, the
-// highlighter itself on dark). Comments get Victor Mono's cursive italic —
-// the demos teach through their comments, so they should read like notes in
-// the margin rather than fade into grey.
+// highlighter itself on dark). Code is set in Atkinson Hyperlegible Mono,
+// the monospaced sibling of the UI font, built for the same job: keeping
+// look-alike characters (l/1/I, 0/O) easy to tell apart.
 function editorTheme(scheme, accentColor) {
   return {
     colors: { ...EDITOR_COLORS[scheme], accent: accentColor },
     syntax: EDITOR_SYNTAX[scheme],
     font: {
       body: '"Atkinson Hyperlegible Next", system-ui, sans-serif',
-      mono: '"Victor Mono", "Cascadia Code", Consolas, monospace',
+      mono: '"Atkinson Hyperlegible Mono", "Cascadia Mono", Consolas, monospace',
       size: '14px',
       lineHeight: '22px',
     },

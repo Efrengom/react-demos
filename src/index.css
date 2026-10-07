@@ -26,7 +26,7 @@
   --tok-comment: #6b7389;
 
   --font-ui: 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-code: 'Victor Mono', 'Cascadia Code', Consolas, monospace;
+  --font-code: 'Atkinson Hyperlegible Mono', 'Cascadia Mono', Consolas, monospace;
 
   --sidebar-width: 272px;
   --content-max-width: 1400px;
@@ -92,9 +92,9 @@ a {
   border-radius: 2px;
 }
 
-/* Victor Mono draws `=>` and `!==` as single arrow/symbol glyphs. That's
-   lovely for reading but wrong for learning: you need to see the exact
-   characters you'd type. */
+/* Many code fonts draw `=>` and `!==` as single arrow/symbol glyphs. That's
+   wrong for learning: you need to see the exact characters you'd type, so
+   ligatures stay off whichever font ends up rendering the code. */
 code,
 .hero-code,
 .sandpack-frame .cm-content {
@@ -272,11 +272,11 @@ code {
 .tok-prop { color: var(--tok-prop); }
 .tok-string { color: var(--tok-string); }
 .tok-punct { color: var(--graphite); }
-.tok-comment { color: var(--tok-comment); font-style: italic; }
+.tok-comment { color: var(--tok-comment); }
 
 /* The one editable thing on the page, so it carries a stroke of highlighter
    to say "this part is yours to change". Sized in ch from its own length,
-   which is exact because Victor Mono is monospaced. */
+   which is exact because the code font is monospaced. */
 .hero-prop-input {
   min-width: 1ch;
   margin: 0;
