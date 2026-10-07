@@ -1,49 +1,59 @@
-import { NavLink } from 'react-router-dom'
-import { categories, categoryColors, categorySoftColors, demos } from '../demos/registry.js'
+import { useState } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import { categories, categoryMarks, demos } from '../demos/registry.js'
 
 export default function Sidebar() {
+  const { pathname } = useLocation()
+  // On small screens the lesson list folds behind a toggle. Remembering
+  // *which page* it was opened on (rather than a plain boolean) means it
+  // closes itself as soon as you pick a lesson — no effect needed.
+  const [openOn, setOpenOn] = useState(null)
+  const isOpen = openOn === pathname
+
   return (
-    <nav className="sidebar">
-      <p className="sidebar-title">React Playground</p>
-      <p className="sidebar-subtitle">Interactive demos</p>
+    <aside className="sidebar">
+      <div className="sidebar-head">
+        <Link to="/" className="brand">
+          React Playground
+        </Link>
+        <button
+          type="button"
+          className="sidebar-toggle"
+          aria-expanded={isOpen}
+          aria-controls="lesson-nav"
+          onClick={() => setOpenOn(isOpen ? null : pathname)}
+        >
+          {isOpen ? 'Hide lessons' : 'Lessons'}
+        </button>
+      </div>
 
-      <NavLink
-        to="/"
-        end
-        className={({ isActive }) => 'sidebar-link' + (isActive ? ' active' : '')}
-      >
-        Home
-      </NavLink>
-
-      {categories.map((category) => {
-        const color = categoryColors[category]
-        const softColor = categorySoftColors[category]
-
-        return (
-          <div className="sidebar-group" key={category}>
-            <p className="sidebar-group-label">
-              <span className="sidebar-group-dot" style={{ background: color }} />
-              {category}
-            </p>
-            {demos
-              .filter((demo) => demo.category === category)
-              .map((demo) => (
-                <NavLink
-                  key={demo.slug}
-                  to={`/demo/${demo.slug}`}
-                  className={({ isActive }) => 'sidebar-link' + (isActive ? ' active' : '')}
-                  style={({ isActive }) =>
-                    isActive
-                      ? { background: softColor, color, borderLeftColor: color }
-                      : undefined
-                  }
-                >
-                  {demo.title}
-                </NavLink>
-              ))}
-          </div>
-        )
-      })}
-    </nav>
+      <nav id="lesson-nav" className={'lesson-nav' + (isOpen ? ' is-open' : '')} aria-label="Lessons">
+        {categories.map((category) => (
+          <section
+            className="lesson-group"
+            key={category}
+            style={{ '--mark': categoryMarks[category] }}
+          >
+            <h2 className="lesson-group-name">
+              <span className="marker">{category}</span>
+            </h2>
+            <ol className="lesson-list">
+              {demos
+                .filter((demo) => demo.category === category)
+                .map((demo) => (
+                  <li key={demo.slug}>
+                    <NavLink to={`/demo/${demo.slug}`} className="lesson-link">
+                      {/* Numbered across the whole course, not per group —
+                          the registry is in reading order, start to finish. */}
+                      <span className="lesson-num">{demos.indexOf(demo) + 1}</span>
+                      <span className="lesson-name">{demo.title}</span>
+                    </NavLink>
+                  </li>
+                ))}
+            </ol>
+          </section>
+        ))}
+      </nav>
+    </aside>
   )
 }

@@ -28,37 +28,36 @@ export default function App() {
 
   return (
     <div style={{ fontFamily: "sans-serif", padding: 16 }}>
-      <form>
-        <label>
-          Name:{" "}
+      <form style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <label style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ width: 64, flexShrink: 0 }}>Name:</span>
           {/* "value" makes this controlled — React, not the browser, owns
               what's on screen. Without the onChange, this input would be
               read-only (React would block every keystroke). */}
-          <input name="name" value={form.name} onChange={handleChange} />
+          <input name="name" value={form.name} onChange={handleChange} style={{ flex: 1 }} />
         </label>
-        <br />
-        <label style={{ display: "block", marginTop: 8 }}>
-          Role:{" "}
-          <select name="role" value={form.role} onChange={handleChange}>
+        <label style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ width: 64, flexShrink: 0 }}>Role:</span>
+          <select name="role" value={form.role} onChange={handleChange} style={{ flex: 1 }}>
             <option value="developer">Developer</option>
             <option value="designer">Designer</option>
             <option value="manager">Manager</option>
           </select>
         </label>
-        <label style={{ display: "block", marginTop: 8 }}>
+        <label style={{ display: "flex", alignItems: "center", gap: 8 }}>
           {/* Checkboxes use "checked" instead of "value". */}
           <input
             type="checkbox"
             name="subscribe"
             checked={form.subscribe}
             onChange={handleChange}
-          />{" "}
+          />
           Subscribe to updates
         </label>
       </form>
 
-      <h3>Live state</h3>
-      <pre style={{ background: "#f6f7f9", padding: 12, borderRadius: 6 }}>
+      <h3 style={{ margin: "20px 0 8px" }}>Live state</h3>
+      <pre style={{ background: "#f6f7f9", padding: 12, borderRadius: 8, margin: 0 }}>
         {JSON.stringify(form, null, 2)}
       </pre>
     </div>
