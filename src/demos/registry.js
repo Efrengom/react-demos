@@ -50,18 +50,22 @@ export const demosBySlug = Object.fromEntries(demos.map((d) => [d.slug, d]))
 
 export const categories = [...new Set(demos.map((d) => d.category))]
 
-// Assigned in category order so each topic group gets a stable, distinct accent.
-const PALETTE = ['#7c3aed', '#0ea5e9', '#059669', '#d97706', '#dc2626', '#db2777']
+// One highlighter per category, assigned in category order. `mark` is the
+// highlighter itself — only ever used as a background behind dark text, since
+// it's far too light to read as text. `ink` is a deep shade of the same hue
+// that's dark enough for text, borders, and the editor's accent color.
+const PALETTE = [
+  { mark: '#ffe45c', ink: '#7d5f00' }, // yellow
+  { mark: '#ffafd2', ink: '#b0135e' }, // pink
+  { mark: '#93e6cb', ink: '#08704f' }, // mint
+  { mark: '#a9d4ff', ink: '#1a5da6' }, // blue
+  { mark: '#ffc48a', ink: '#9a4a00' }, // orange
+]
 
 export const categoryColors = Object.fromEntries(
-  categories.map((category, i) => [category, PALETTE[i % PALETTE.length]])
+  categories.map((category, i) => [category, PALETTE[i % PALETTE.length].ink])
 )
 
-function hexToRgba(hex, alpha) {
-  const n = parseInt(hex.slice(1), 16)
-  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`
-}
-
-export const categorySoftColors = Object.fromEntries(
-  categories.map((category) => [category, hexToRgba(categoryColors[category], 0.14)])
+export const categoryMarks = Object.fromEntries(
+  categories.map((category, i) => [category, PALETTE[i % PALETTE.length].mark])
 )
